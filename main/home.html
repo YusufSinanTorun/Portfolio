@@ -6,32 +6,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#101211">
     <title>Home</title>
+    <script>
+        document.documentElement.classList.add("layout-pending");
+        window.addEventListener("pageshow",()=>{
+            requestAnimationFrame(()=>{document.documentElement.classList.remove("layout-pending");});},{ once: true });</script>
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body><header class="top">
+<body>
+<div class="opening">
+<header class="top">
 <nav aria-label="navigation">
-    <a href="home.html" aria-current="page">Home</a>
-    <a href="../pages/projekte.html" aria-current="page">Projekte</a>
     <a href="../pages/ausstellung.html" aria-current="page">Ausstellung</a>
     <a href="../pages/profil.html" aria-current="page">Profil</a>
     <a href="../pages/kontakt.html" aria-current="page">Kontakt</a></nav></header>
 
-<main id="content">
-    <section class="hm">
-        <div class="hm text"><h1>Yusuf Sinan Torun</h1>
-            <p class="hm text lead">
-                Ich orientiere mich beruflich neu und suche einen Partner für ein duales Studium oder ein Praktikum.
-                Mein Blick reicht von Chemie und Konstruktion bis zu Mathematik und Gestaltung.</p></div>
-        
-        <!-- FIX THIS -->
-        <div class="hm image" aria-label="hoverchange">
-            <img class="hm image default" src="../gfx/bg.png" alt="">
-            <img class="hm image hover" src="../gfx/paradise.jpg" alt="">
-        </div></section>
-        <!-- FIX THIS -->
+<div class="hm image" tabindex="0" aria-label="hoverchange">
+    <img class="default" src="../gfx/bg.png" alt="">
+    <canvas class="reveal" aria-hidden="true"></canvas></div></div>
 
-    <section><h1>Arbeiten und Erfahrungen</h1></section>
+<main id="content">
+    <section class="work-heading"><h1>Projekte & Erfahrungen</h1></section>
 
     <div class="projects">
         <a class="project" href="../project-list/chemie.html">
@@ -42,7 +37,7 @@
             <span>Praxis - Umweltanalytik</span>
             <h2>Laborpraktikum</h2>
             <p>Erfahrung im Umwelt- und Analytiklabor in Magdeburg</p></a>
-        <a class="project" href="">
+        <a class="project">
             <span>3D-Modellierung - technische Zeichnungen</span>
             <h2>CAD</h2>
             <p>Rotor und Flugzeugflügel in SolidWorks</p></a>
@@ -51,12 +46,13 @@
             <h2>Mathematik-Nachhilfe</h2>
             <p>Für die Klassen 5 bis 7</p></a></div>
 
-    <section class="contact" id="cont">
-        <h1>Kontakt</h1>
+    <section class="contact" id="cont"><h1>Kontakt</h1>
+        <h2>Eine Idee beginnt mit einem Gespräch.</h2>
         <p>
-            Ich freue mich über Kontakte zu dualen Studienmöglichkeiten,
+            Ich freue mich über <strong>Kontakte</strong> zu dualen Studienmöglichkeiten,
             Praktika und Projekten an der Schnittstelle von Naturwissenschaft, Technik und Gestaltung.</p>
-        <div class="actions"></div>
-            <a class="button" href="mailto:yosufsenanthor@gmail.com">E-Mail</a>
-            <a class="button light" href="https://www.linkedin.com/in/yusuf-sinan-torun" target="_blank" rel="noopener noreferrer">LinkedIn</a></div>
-    </section></main></body></html>
+        <div class="contact-actions">
+            <a class="contact-link contact-link-primary" href="mailto:yosufsenanthor@gmail.com">E-Mail</a>
+            <a class="contact-link contact-link-secondary" href="https://www.linkedin.com/in/yusuf-sinan-torun"
+            target="_blank" rel="noopener noreferrer">LinkedIn</a></div>
+    </section></main><script src="reveal.js" defer></script><script src="scroll-cover.js" defer></script></body></html>

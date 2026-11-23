@@ -1,41 +1,86 @@
 <!doctype html>
 <html lang="de">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="#101211">
-    <title>Ausstellung</title>
-    <link rel="stylesheet" href="../main/styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f0f0f">
+  <title>Ausstellung · Yusuf Sinan Torun</title>
+  <link rel="stylesheet" href="../main/styles.css">
+  <link rel="stylesheet" href="../main/exhibition.css">
+  <script src="../main/exhibition.js" defer></script>
 </head>
+<body>
+  <a class="skip" href="#exhibition">Zum Inhalt springen</a>
+  <header class="top">
+    <nav aria-label="Hauptnavigation">
+      <a href="../main/home.html">Home</a>
+      <a href="ausstellung.html" aria-current="page">Ausstellung</a>
+      <a href="profil.html">Profil</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+  </header>
 
-<body><header class="top">
-<nav aria-label="navigation">
-    <a href="../main/home.html" aria-current="page">Home</a>
-    <a href="projekte.html" aria-current="page">Projekte</a>
-    <a href="ausstellung.html" aria-current="page">Ausstellung</a>
-    <a href="profil.html" aria-current="page">Profil</a>
-    <a href="kontakt.html" aria-current="page">Kontakt</a></nav></header>
+  <main id="content" class="exhibition-page">
+    <header class="exhibition-head" id="exhibition">
+      <p class="exhibition-kicker">Zeichnungen / Sammlung</p>
+      <h1>Ausstellung<span class="exhibition-dot">.</span></h1>
+      <p class="exhibition-lead">Gedanken in Linien. Eigene Arbeiten zwischen Erinnerungen, Figuren und erfundenen Räumen.</p>
+      <div class="exhibition-rule"><span>01 / Arbeiten</span><span>Yusuf Sinan Torun</span></div>
+    </header>
 
-<main id="content">
-    <h1>Collage - November 2026</h1>
-    
-    <div class="art">
-        <figure class="art tall"><img src="../pictures/memories.jpg" alt="" loading="lazy">
-            <figcaption><span>Memories</span><span>Bleistift</span></figcaption></figure>
-        <figure class="art tall"><img src="../pictures/paradise.jpg" alt="" loading="lazy">
-            <figcaption><span>Paradise</span><span>Bleistift</span></figcaption></figure>
-        <figure class="art tall"><img src="../pictures/timeline.jpg" alt="" loading="lazy">
-            <figcaption><span>timeline</span><span>Bleistift.</span></figcaption></figure>
-        <figure><img src="../pictures/tower.jpg" alt="" loading="lazy">
-            <figcaption><span>Turm im Grünen</span><span>Bleistift & Farbe - Aquarell</span></figcaption></figure></div>
-    
+    <div id="gallery" class="exhibition-gallery">
+      <!-- The initial artwork remains visible even when JavaScript is unavailable. -->
+      <section class="exhibition-collection" aria-labelledby="initial-collection">
+        <div class="collection-intro"><p class="collection-index">Sammlung 01</p><h2 id="initial-collection">Collage · November 2026</h2><p>Vier eigene Zeichnungen zwischen Erinnerung, erfundenen Bildräumen und beobachteten Orten.</p></div>
+        <div class="exhibition-grid">
+          <figure class="exhibition-card"><div class="exhibition-media"><img src="../gfx/memories.jpg" alt="Eigenzeichnung Memories" loading="lazy"></div><figcaption><strong>Memories</strong><span>Bleistiftzeichnung</span></figcaption></figure>
+          <figure class="exhibition-card"><div class="exhibition-media"><img src="../gfx/paradise.jpg" alt="Eigenzeichnung Paradise" loading="lazy"></div><figcaption><strong>Paradise</strong><span>Bleistiftzeichnung</span></figcaption></figure>
+          <figure class="exhibition-card"><div class="exhibition-media"><img src="../gfx/timeline.jpg" alt="Eigenzeichnung Timeline" loading="lazy"></div><figcaption><strong>Timeline</strong><span>Bleistiftzeichnung</span></figcaption></figure>
+          <figure class="exhibition-card"><div class="exhibition-media"><img src="../gfx/tower.jpg" alt="Zeichnung eines Turms zwischen Bäumen" loading="lazy"></div><figcaption><strong>Turm im Grünen</strong><span>Bleistift und Farbe</span></figcaption></figure>
+        </div>
+      </section>
+    </div>
+
     <section class="contact" id="cont">
-        <h1>Kontakt</h1>
-        <p>
-            Ich freue mich über Kontakte zu dualen Studienmöglichkeiten,
-            Praktika und Projekten an der Schnittstelle von Naturwissenschaft, Technik und Gestaltung.</p>
-        <div class="actions"></div>
-            <a class="button" href="mailto:yosufsenanthor@gmail.com">E-Mail</a>
-            <a class="button light" href="https://www.linkedin.com/in/yusuf-sinan-torun" target="_blank" rel="noopener noreferrer">LinkedIn</a></div>
-    </section></main></body></html>
+      <h2>Eine Idee beginnt mit einem Gespräch.</h2>
+      <p>Ich freue mich über Kontakte zu dualen Studienmöglichkeiten, Praktika und Projekten zwischen Naturwissenschaft, Technik und Gestaltung.</p>
+      <div class="contact-actions">
+        <a class="contact-link contact-link-primary" href="mailto:yosufsenanthor@gmail.com">E-Mail</a>
+        <a class="contact-link contact-link-secondary" href="https://www.linkedin.com/in/yusuf-sinan-torun" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <button class="contact-link exhibition-admin-trigger" type="button" id="admin-open">Admin</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="admin-dialog" class="admin-dialog" aria-labelledby="admin-title">
+    <div class="admin-topline"><p class="exhibition-kicker">Privater Bereich</p><button type="button" class="admin-close" id="admin-close" aria-label="Schließen">×</button></div>
+    <h2 id="admin-title">Werk veröffentlichen<span class="exhibition-dot">.</span></h2>
+    <p id="admin-status" class="admin-status" role="status" aria-live="polite"></p>
+    <form id="admin-login" class="admin-form">
+      <label for="admin-password">Passwort</label>
+      <input id="admin-password" name="password" type="password" autocomplete="current-password" minlength="16" required>
+      <button class="admin-submit" type="submit">Anmelden <span aria-hidden="true">↗</span></button>
+    </form>
+    <form id="admin-publish" class="admin-form" hidden>
+      <label for="admin-collection">Sammlung</label>
+      <select id="admin-collection" name="collectionId"><option value="">Neue Sammlung erstellen</option></select>
+      <div id="admin-new-collection" class="admin-form-group">
+        <label for="admin-collection-title">Titel der Collage / Sammlung</label>
+        <input id="admin-collection-title" name="collectionTitle" maxlength="100" required>
+        <label for="admin-collection-description">Beschreibung der Sammlung</label>
+        <textarea id="admin-collection-description" name="collectionDescription" maxlength="800" rows="3" required></textarea>
+      </div>
+      <label for="admin-art-title">Titel des Werks</label>
+      <input id="admin-art-title" name="artTitle" maxlength="100" required>
+      <label for="admin-caption">Bildunterschrift</label>
+      <input id="admin-caption" name="caption" maxlength="240" required>
+      <label for="admin-alt">Bildbeschreibung (für Screenreader)</label>
+      <input id="admin-alt" name="alt" maxlength="240" required>
+      <label for="admin-image">Bilddatei (PNG, JPEG oder WebP; maximal 2 MB)</label>
+      <input id="admin-image" name="image" type="file" accept="image/png,image/jpeg,image/webp" required>
+      <button class="admin-submit" type="submit">In Git veröffentlichen <span aria-hidden="true">↗</span></button>
+      <button type="button" class="admin-logout" id="admin-logout">Abmelden</button>
+    </form>
+  </dialog>
+</body>
+</html>

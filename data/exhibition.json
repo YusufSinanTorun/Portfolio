@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "collections": [
+    {
+      "id": "collage-2026-11",
+      "title": "Collage · November 2026",
+      "description": "Vier eigene Zeichnungen zwischen Erinnerung, erfundenen Bildräumen und beobachteten Orten.",
+      "artworks": [
+        { "id": "memories", "title": "Memories", "caption": "Bleistiftzeichnung", "alt": "Eigenzeichnung Memories", "image": "/gfx/memories.jpg" },
+        { "id": "paradise", "title": "Paradise", "caption": "Bleistiftzeichnung", "alt": "Eigenzeichnung Paradise", "image": "/gfx/paradise.jpg" },
+        { "id": "timeline", "title": "Timeline", "caption": "Bleistiftzeichnung", "alt": "Eigenzeichnung Timeline", "image": "/gfx/timeline.jpg" },
+        { "id": "tower", "title": "Turm im Grünen", "caption": "Bleistift und Farbe", "alt": "Zeichnung eines Turms zwischen Bäumen", "image": "/gfx/tower.jpg" }
+      ]
+    }
+  ]
+}
