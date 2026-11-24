@@ -1,5 +1,32 @@
 const API = "https://api.github.com";
 
+// Keep GitHub diagnostics useful without exposing request URLs, tokens or raw API responses.
+function requestStep(path, method) {
+  if (method === "POST" && path === "/git/blobs") return "Bild an GitHub übertragen";
+  if (method === "GET" && path.startsWith("/git/ref/heads/")) return "Branch lesen";
+  if (method === "GET" && path.startsWith("/git/commits/")) return "letzten Commit lesen";
+  if (method === "GET" && path.startsWith("/contents/data/exhibition.json")) return "Sammlungsdatei lesen";
+  if (method === "POST" && path === "/git/trees") return "Dateien für Commit vorbereiten";
+  if (method === "POST" && path === "/git/commits") return "Commit erstellen";
+  if (method === "PATCH" && path.startsWith("/git/refs/heads/")) return "Branch aktualisieren";
+  return "GitHub-Anfrage";
+}
+
+async function failureReason(response) {
+  const data = await response.json().catch(() => null);
+  switch (data?.message) {
+    case "Bad credentials": return "Der Token ist ungültig oder abgelaufen.";
+    case "Resource not accessible by personal access token":
+      return "Der Token hat für diesen Vorgang keinen Zugriff.";
+    case "Repository access blocked": return "GitHub blockiert den Zugriff auf das Repository.";
+    default:
+      if (typeof data?.message === "string" && data.message.startsWith("API rate limit exceeded")) {
+        return "Das GitHub-API-Limit wurde erreicht.";
+      }
+      return "";
+  }
+}
+
 function repository(env) {
   if (!/^[\w.-]+\/[\w.-]+$/.test(env.GITHUB_REPO || "") || !/^[\w.-]+$/.test(env.GITHUB_BRANCH || "") || !env.GITHUB_TOKEN) {
     throw new Error("GitHub-Zugang ist noch nicht eingerichtet.");
@@ -18,12 +45,15 @@ async function github(env, path, method = "GET", body) {
     },
     ...(body === undefined ? {} : { body: JSON.stringify(body) })
   });
-  if (response.status === 409 || response.status === 422) {
+  if ((response.status === 409 || response.status === 422) && method === "PATCH" && path.startsWith("/git/refs/heads/")) {
     const conflict = new Error("Der Git-Stand hat sich geändert. Bitte erneut versuchen.");
     conflict.conflict = true;
     throw conflict;
   }
-  if (!response.ok) throw new Error(`GitHub konnte die Veröffentlichung nicht speichern (HTTP ${response.status}).`);
+  if (!response.ok) {
+    const reason = await failureReason(response);
+    throw new Error(`GitHub: ${requestStep(path, method)} fehlgeschlagen (HTTP ${response.status}).${reason ? ` ${reason}` : ""}`);
+  }
   return response.json();
 }
 
