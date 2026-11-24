@@ -56,6 +56,7 @@ async function github(env, path, method = "GET", body) {
     method,
     headers: {
       "Accept": "application/vnd.github+json",
+      "User-Agent": "YusufSinanTorun-Portfolio/1.0",
       "Authorization": `Bearer ${env.GITHUB_TOKEN}`,
       "X-GitHub-Api-Version": "2026-03-10",
       ...(body === undefined ? {} : { "Content-Type": "application/json" })
