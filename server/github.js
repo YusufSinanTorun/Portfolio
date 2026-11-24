@@ -12,7 +12,7 @@ function requestStep(path, method) {
   return "GitHub-Anfrage";
 }
 
-async function failureReason(response) {
+async function failureReason(response, token) {
   const data = await response.json().catch(() => null);
   switch (data?.message) {
     case "Bad credentials": return "Der Token ist ungültig oder abgelaufen.";
@@ -22,6 +22,18 @@ async function failureReason(response) {
     default:
       if (typeof data?.message === "string" && data.message.startsWith("API rate limit exceeded")) {
         return "Das GitHub-API-Limit wurde erreicht.";
+      }
+      // Only show a short, redacted JSON message to the authenticated administrator.
+      // Never expose untrusted HTML responses, links, access tokens or GitHub headers.
+      if (typeof data?.message === "string") {
+        const safe = data.message
+          .replaceAll(token, "[entfernt]")
+          .replace(/\b(?:github_pat_|gh[pousr]_)[a-zA-Z0-9_]+\b/g, "[entfernt]")
+          .replace(/https?:\/\/\S+/g, "[Link entfernt]")
+          .replace(/[\x00-\x1f\x7f]/g, " ")
+          .slice(0, 180)
+          .trim();
+        if (safe) return `GitHub meldet: ${safe}`;
       }
       return "";
   }
@@ -51,7 +63,7 @@ async function github(env, path, method = "GET", body) {
     throw conflict;
   }
   if (!response.ok) {
-    const reason = await failureReason(response);
+    const reason = await failureReason(response, env.GITHUB_TOKEN);
     throw new Error(`GitHub: ${requestStep(path, method)} fehlgeschlagen (HTTP ${response.status}).${reason ? ` ${reason}` : ""}`);
   }
   return response.json();
