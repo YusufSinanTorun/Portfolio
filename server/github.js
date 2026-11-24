@@ -35,7 +35,12 @@ async function failureReason(response, token) {
           .trim();
         if (safe) return `GitHub meldet: ${safe}`;
       }
-      return "";
+      const contentType = response.headers.get("content-type")?.split(";")[0].trim() || "unbekannt";
+      const safeType = /^[a-zA-Z0-9.+/-]{1,50}$/.test(contentType) ? contentType : "unbekannt";
+      const githubId = response.headers.has("x-github-request-id") ? "ja" : "nein";
+      const remaining = response.headers.get("x-ratelimit-remaining");
+      const rateLimit = remaining !== null && /^\d{1,9}$/.test(remaining) ? `; API-Limit übrig: ${remaining}` : "";
+      return `Keine lesbare GitHub-Meldung (Antworttyp: ${safeType}; GitHub-Anfrage-ID vorhanden: ${githubId}${rateLimit}).`;
   }
 }
 
@@ -64,7 +69,7 @@ async function github(env, path, method = "GET", body) {
   }
   if (!response.ok) {
     const reason = await failureReason(response, env.GITHUB_TOKEN);
-    throw new Error(`GitHub: ${requestStep(path, method)} fehlgeschlagen (HTTP ${response.status}).${reason ? ` ${reason}` : ""}`);
+    throw new Error(`GitHub-Diagnose 3: ${requestStep(path, method)} fehlgeschlagen (HTTP ${response.status}). ${reason}`);
   }
   return response.json();
 }
